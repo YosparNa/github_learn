@@ -8,18 +8,33 @@ class Ship:
         参数:
         ai_game: AlienInvasion类的实例，用于访问屏幕对象
         """
-        self.screen = ai_game.screen  # 获取游戏屏幕对象
-        self.screen_rect = ai_game.screen.get_rect()  # 获取屏幕的矩形区域
-        
-        # 加载飞船图像并获取其外接矩形
-        self.image = pygame.image.load('python_alien_invasion\images\ship.bmp')  # 加载飞船图像
+        # 获取游戏屏幕对象
+        self.screen = ai_game.screen  
+        # 获取屏幕的矩形区域
+        self.screen_rect = ai_game.screen.get_rect()  
+        self.settings = ai_game.settings
+        self.image = pygame.image.load('images/ship.bmp')
         # 改变飞船大小
-        self.image = pygame.transform.scale(self.image, (80, 60))  # 调整飞船图像大小
-        self.rect = self.image.get_rect()  # 获取飞船图像的矩形区域
-        
+        #self.image = pygame.transform.scale(self.image, (80, 60))
+        # 获取飞船图像的矩形区域
+        self.rect = self.image.get_rect()  
         # 每艘新飞船都放在屏幕底部的中央
-        self.rect.midbottom = self.screen_rect.midbottom  # 设置飞船的位置为屏幕底部中央
-
+        self.rect.midbottom = self.screen_rect.midbottom
+        # 在飞船的属性 x 中存储一个浮点数
+        self.x = float(self.rect.x)
+        # 加载飞船图像并获取其外接矩形
+        # 移动标志（飞船一开始不移动）
+        self.moving_right = False
+        self.moving_left = False
+    def update(self):
+        """根据移动标志调整飞船的位置"""
+        # 更新飞船的属性 x 的值，而不是其外接矩形的属性 x 的值
+        if self.moving_right and self.rect.right < self.screen_rect.right:
+             self.x += self.settings.ship_speed
+        if self.moving_left and self.rect.left > 0:
+              self.x -= self.settings.ship_speed
+          # 根据 self.x 更新 rect 对象
+        self.rect.x = self.x
     def blitme(self):
         """在指定位置绘制飞船"""
-        self.screen.blit(self.image, self.rect)  # 在屏幕上绘制飞船
+        self.screen.blit(self.image, self.rect)
