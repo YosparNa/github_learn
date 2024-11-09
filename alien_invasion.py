@@ -191,9 +191,10 @@ class AlienInvasion:
         self.settings.fleet_direction *= -1
     def _ship_hit(self):
         """响应飞船和外星人的碰撞"""
-        if self.stats.ships_left > 0:
-            # 将 ships_left 减 1
-            self.stats.ships_left -= 1
+        # 先减少一条命
+        self.stats.ships_left -= 1
+        
+        if self.stats.ships_left > 0:  # 改为 >= 0
             self.sb.prep_ships()
             # 清空外星人列表和子弹列表
             self.bullets.empty()
