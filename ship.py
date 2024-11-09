@@ -1,13 +1,11 @@
 import pygame  # 导入pygame库
-
-class Ship:
+from pygame.sprite import Sprite
+class Ship(Sprite):
     """管理飞船的类"""
     
     def __init__(self, ai_game):
-        """初始化飞船并设置其初始位置
-        参数:
-        ai_game: AlienInvasion类的实例，用于访问屏幕对象
-        """
+        """初始化飞船并设置其初始位置"""
+        super().__init__()
         # 获取游戏屏幕对象
         self.screen = ai_game.screen  
         # 获取屏幕的矩形区域
